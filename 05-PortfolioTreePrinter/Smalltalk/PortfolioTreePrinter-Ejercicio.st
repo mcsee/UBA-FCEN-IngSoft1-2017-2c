@@ -66,27 +66,27 @@ test05PortfolioCanManagePortfolios
 
 	self assert: 600 = composedPortfolio balance .! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HernanWilkinson 9/12/2011 13:26'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 9/25/2017 20:14:36'!
 test06ReceptiveAccountKnowsRegisteredTransactions 
 
 	| account deposit withdraw |
 	
 	account := ReceptiveAccount new.
 	deposit := Deposit register: 100 on: account.
-	withdraw := Withdraw register: -50 on: account.
+	withdraw := Withdraw register: 50 on: account.
 		
 	self assert: (account registers: deposit).
 	self assert: (account registers: withdraw).
 ! !
 
-!PortfolioTest methodsFor: 'tests' stamp: 'HernanWilkinson 9/12/2011 13:26'!
+!PortfolioTest methodsFor: 'tests' stamp: 'HAW 9/25/2017 20:14:30'!
 test07ReceptiveAccountDoNotKnowNotRegisteredTransactions
 
 	| account deposit withdraw |
 	
 	account := ReceptiveAccount new.
 	deposit :=  Deposit for: 100.
-	withdraw := Withdraw for: -50.
+	withdraw := Withdraw for: 50.
 		
 	self deny: (account registers: deposit).
 	self deny: (account registers:withdraw).
@@ -664,10 +664,12 @@ balance
 	^ accounts sum: [ :account | account balance ]
 ! !
 
-!Portfolio methodsFor: 'transactions' stamp: 'HernanWilkinson 7/13/2011 19:23'!
+!Portfolio methodsFor: 'transactions' stamp: 'HAW 9/25/2017 19:40:20'!
 transactions 
 
-	^ accounts inject: OrderedCollection new into: [ :transactions :account | transactions addAll: account transactions. transactions ]
+	^ accounts 
+		inject: OrderedCollection new 
+		into: [ :transactions :account | transactions addAll: account transactions. transactions ]
 	! !
 
 !Portfolio methodsFor: 'transactions' stamp: 'HernanWilkinson 7/13/2011 19:27'!
